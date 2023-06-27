@@ -21,6 +21,14 @@ func NewUserHandler(service *UserService) *UserHandler {
 	}
 }
 
+// CreateUser
+// @Tags    users
+// @Summary 创建用户
+// @Accept   json
+// @Produce  json
+// @Param data body domain.UpdateUser true "User Info"
+// @Success 200 {object} domain.CreateUserResp
+// @Router /user/create [post]
 func (h *UserHandler) CreateUser(c *gin.Context) {
 	user := &domain.UpdateUser{}
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -36,6 +44,14 @@ func (h *UserHandler) CreateUser(c *gin.Context) {
 	helpers.WriteResponse(c, 0, "Success", respUser)
 }
 
+// GetUsers
+// @Tags    users
+// @Summary 获取用户列表
+// @Produce  json
+// @Param page query string true "page index"
+// @Param size query string true "page size"
+// @Success 200 {object} domain.UserList
+// @Router /users [get]
 func (h *UserHandler) GetUsers(c *gin.Context) {
 	page, err := strconv.Atoi(c.Query("page"))
 	if err != nil {
@@ -56,6 +72,14 @@ func (h *UserHandler) GetUsers(c *gin.Context) {
 	helpers.WriteResponse(c, 0, "Success", gin.H{"users": users, "total": total})
 }
 
+// UpdateUser
+// @Tags    users
+// @Summary 创建用户
+// @Accept   json
+// @Produce  json
+// @Param data body domain.UpdateUser true "User Info"
+// @Success 200 {object} domain.CreateUserResp
+// @Router /user/{id} [PUT]
 func (h *UserHandler) UpdateUser(c *gin.Context) {
 	userID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -77,6 +101,14 @@ func (h *UserHandler) UpdateUser(c *gin.Context) {
 	helpers.WriteResponse(c, 0, "User updated successfully", nil)
 }
 
+// DeleteUser
+// @Tags    users
+// @Summary 删除用户
+// @Accept   json
+// @Produce  json
+// @Param id path int true "ID"
+// @Success 200 {string} json "{"code":0,"data":"Success","message":""}"
+// @Router /user/{id} [DELETE]
 func (h *UserHandler) DeleteUser(c *gin.Context) {
 	userID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

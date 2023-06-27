@@ -1,0 +1,135 @@
+definitions:
+  domain.CreateUserResp:
+    properties:
+      id:
+        type: integer
+    type: object
+  domain.UpdateUser:
+    properties:
+      age:
+        type: integer
+      gender:
+        enum:
+        - 1
+        - 2
+        type: integer
+      name:
+        type: string
+      phone:
+        type: string
+    required:
+    - name
+    type: object
+  domain.UserList:
+    properties:
+      age:
+        type: integer
+      create_time:
+        type: string
+      gender:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample server.
+  title: Yidan's Demo API
+  version: "1.0"
+paths:
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"data":"Success","message":""}'
+          schema:
+            type: string
+      summary: 删除用户
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Info
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.CreateUserResp'
+      summary: 创建用户
+      tags:
+      - users
+  /user/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Info
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.CreateUserResp'
+      summary: 创建用户
+      tags:
+      - users
+  /users:
+    get:
+      parameters:
+      - description: page index
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: page size
+        in: query
+        name: size
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.UserList'
+      summary: 获取用户列表
+      tags:
+      - users
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

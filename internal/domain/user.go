@@ -23,11 +23,10 @@ type UserList struct {
 }
 
 type UpdateUser struct {
-	ID     int
-	Name   string `json:"name" binding:"required"`
-	Age    int    `json:"age"`
-	Gender int    `json:"gender" binding:"oneof=1 2"`
-	Phone  string `json:"phone"`
+	Name   string `json:"name" binding:"required" description:"User ID"`
+	Age    int    `json:"age" description:"User Age"`
+	Gender int    `json:"gender" description:"User Gender" binding:"oneof=1 2"`
+	Phone  string `json:"phone" description:"User Phone"`
 }
 
 type CreateUserResp struct {

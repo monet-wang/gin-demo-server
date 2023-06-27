@@ -2,7 +2,7 @@ package main
 
 import (
 	_ "github.com/go-sql-driver/mysql"
-	_ "mark-server/cmd/docs"
+	_ "mark-server/docs"
 	"mark-server/pkg/server"
 )
 

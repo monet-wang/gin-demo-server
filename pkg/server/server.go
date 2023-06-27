@@ -7,9 +7,24 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	_ "mark-server/docs"
+
 	"mark-server/internal/app/user"
 	"mark-server/internal/infrastructure/database"
 )
+
+// @title           Yidan's Demo API
+// @version         1.0
+// @description     This is a sample server.
+
+// @host      localhost:8080
+// @securityDefinitions.basic  BasicAuth
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api
 
 func Start() {
 
@@ -46,9 +61,10 @@ func Start() {
 
 	// Register the user handler routes
 	router.GET("/users", userHandler.GetUsers)
-	router.PUT("/users/:id", userHandler.UpdateUser)
-	router.DELETE("/users/:id", userHandler.DeleteUser)
-	router.POST("/users/create", userHandler.CreateUser)
+	router.PUT("/user/:id", userHandler.UpdateUser)
+	router.DELETE("/user/:id", userHandler.DeleteUser)
+	router.POST("/user/create", userHandler.CreateUser)
 
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Run(":8080")
 }
